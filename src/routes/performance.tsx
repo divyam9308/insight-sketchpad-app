@@ -117,7 +117,7 @@ function PerformancePage() {
 
   return (
     <div className="mx-auto max-w-[1400px] px-6 py-8 space-y-6">
-      <div>
+      <div className="rounded-xl border border-primary/15 bg-gradient-to-br from-primary/[0.07] via-background to-gold/[0.07] p-5 shadow-sm">
         <h1 className="text-2xl font-semibold text-foreground">Performance Review</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Track allocation, work done, feedback, and weighted ratings.
@@ -156,22 +156,22 @@ function PerformancePage() {
       )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <SummaryCard label="Final Rating Total" value={fmt(finalRatingTotal)} tone="gold" />
-        <SummaryCard label="Self Rating Total" value={fmt(selfRatingTotal)} />
-        <SummaryCard label="SS/NS Rating Total" value={fmt(ssnsRatingTotal)} />
-        <SummaryCard label="RA Rating Total" value={fmt(finalRatingTotal)} tone="gold" />
+        <SummaryCard label="Final Rating Total" value={fmt(finalRatingTotal)} tint="gold" />
+        <SummaryCard label="Self Rating Total" value={fmt(selfRatingTotal)} tint="indigo" />
+        <SummaryCard label="SS/NS Rating Total" value={fmt(ssnsRatingTotal)} tint="teal" />
+        <SummaryCard label="RA Rating Total" value={fmt(finalRatingTotal)} tint="blue" />
       </div>
 
       <FinalRatingBanner score={finalRatingTotal} />
 
       {!allocationValid && (
-        <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+        <div className="flex items-center gap-2 rounded-lg border border-perf-amber-foreground/30 bg-perf-amber/20 px-4 py-3 text-sm text-perf-amber-foreground">
           <AlertTriangle className="h-4 w-4" />
           Allocation total must equal 100%.
         </div>
       )}
       {!scoresValid && (
-        <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
+        <div className="flex items-center gap-2 rounded-lg border border-perf-rose-foreground/30 bg-perf-rose/20 px-4 py-3 text-sm text-perf-rose-foreground">
           <AlertTriangle className="h-4 w-4" />
           Scores must be numbers from 0 to 5.
         </div>
@@ -190,7 +190,7 @@ function PerformancePage() {
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-sm">
               <thead>
-                <tr className="bg-muted/60 text-left text-xs uppercase tracking-wide text-muted-foreground">
+                <tr className="bg-perf-navy-soft text-left text-xs uppercase tracking-wide text-perf-navy-soft-foreground">
                   {visibleCols.map((c) => (
                     <th
                       key={c.key}
@@ -223,7 +223,7 @@ function PerformancePage() {
                     ))}
                   </tr>
                 ))}
-                <tr className="border-t-2 border-primary/30 bg-primary/5 font-medium">
+                <tr className="border-t-2 border-primary/30 bg-perf-gold-soft font-medium text-perf-gold-soft-foreground">
                   {visibleCols.map((c) => (
                     <td key={c.key} className="px-3 py-3 whitespace-nowrap">
                       {c.key === "category"
@@ -261,27 +261,43 @@ function PerformancePage() {
 function SummaryCard({
   label,
   value,
-  tone,
+  tint,
 }: {
   label: string;
   value: string;
-  tone?: "ok" | "warn" | "gold";
+  tint?: "blue" | "indigo" | "teal" | "gold";
 }) {
+  const tintClasses = {
+    blue: {
+      card: "bg-perf-blue-soft border-perf-blue-soft-foreground/20",
+      label: "text-perf-blue-soft-foreground/70",
+      value: "text-perf-blue-soft-foreground",
+    },
+    indigo: {
+      card: "bg-perf-indigo border-perf-indigo-foreground/20",
+      label: "text-perf-indigo-foreground/70",
+      value: "text-perf-indigo-foreground",
+    },
+    teal: {
+      card: "bg-perf-teal border-perf-teal-foreground/20",
+      label: "text-perf-teal-foreground/70",
+      value: "text-perf-teal-foreground",
+    },
+    gold: {
+      card: "bg-perf-gold-soft border-perf-gold-soft-foreground/20",
+      label: "text-perf-gold-soft-foreground/70",
+      value: "text-perf-gold-soft-foreground",
+    },
+  };
+  const t = tint ? tintClasses[tint] : null;
+
   return (
-    <Card>
+    <Card className={cn("border", t?.card)}>
       <CardContent className="p-5">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+        <p className={cn("text-xs font-medium uppercase tracking-wide", t?.label ?? "text-muted-foreground")}>
           {label}
         </p>
-        <p
-          className={cn(
-            "mt-2 text-2xl font-semibold",
-            tone === "warn" && "text-destructive",
-            tone === "gold" && "text-gold-foreground",
-            !tone && "text-foreground",
-            tone === "ok" && "text-foreground",
-          )}
-        >
+        <p className={cn("mt-2 text-2xl font-semibold", t?.value ?? "text-foreground")}>
           {value}
         </p>
       </CardContent>
@@ -294,54 +310,54 @@ function getRatingBand(score: number) {
     return {
       label: "Does not meet expectations",
       range: "Up to 2.0",
-      bg: "bg-[#fdecec]",
-      border: "border-[#e8a8a8]",
-      text: "text-[#8a2f2f]",
-      dot: "bg-[#b04545]",
+      bg: "bg-perf-rose",
+      border: "border-perf-rose-foreground/30",
+      text: "text-perf-rose-foreground",
+      dot: "bg-perf-rose-foreground",
     };
   if (score < 3)
     return {
       label: "Partially meets expectations; below average, significant improvement required",
       range: "2.0 - 3.0",
-      bg: "bg-[#fdeee4]",
-      border: "border-[#ecc4a8]",
-      text: "text-[#8a5230]",
-      dot: "bg-[#c97a4a]",
+      bg: "bg-perf-orange",
+      border: "border-perf-orange-foreground/30",
+      text: "text-perf-orange-foreground",
+      dot: "bg-perf-orange-foreground",
     };
   if (score < 3.5)
     return {
       label: "Meets defined expectations; improvement required",
       range: "3.0 - 3.5",
-      bg: "bg-[#fdf6e3]",
-      border: "border-[#e8d39a]",
-      text: "text-[#7a5d1f]",
-      dot: "bg-[#c9a346]",
+      bg: "bg-perf-amber",
+      border: "border-perf-amber-foreground/30",
+      text: "text-perf-amber-foreground",
+      dot: "bg-perf-amber-foreground",
     };
   if (score < 4)
     return {
       label: "Good performance; scope of improvement in few areas",
       range: "3.5 - 4.0",
-      bg: "bg-[#f1f6e4]",
-      border: "border-[#cfdca0]",
-      text: "text-[#556b1f]",
-      dot: "bg-[#8aa84a]",
+      bg: "bg-perf-green",
+      border: "border-perf-green-foreground/30",
+      text: "text-perf-green-foreground",
+      dot: "bg-perf-green-foreground",
     };
   if (score < 4.5)
     return {
       label: "Strong performance",
       range: "4.0 - 4.5",
-      bg: "bg-[#ecf6ec]",
-      border: "border-[#b7d8b7]",
-      text: "text-[#2f6b3a]",
-      dot: "bg-[#5aa069]",
+      bg: "bg-perf-teal",
+      border: "border-perf-teal-foreground/30",
+      text: "text-perf-teal-foreground",
+      dot: "bg-perf-teal-foreground",
     };
   return {
     label: "Exceptional performance",
     range: "4.5 and above",
-    bg: "bg-[#e2f1e4]",
-    border: "border-[#8fbf97]",
-    text: "text-[#1f5a30]",
-    dot: "bg-[#3d7f4f]",
+    bg: "bg-perf-green-deep",
+    border: "border-perf-green-deep-foreground/30",
+    text: "text-perf-green-deep-foreground",
+    dot: "bg-perf-green-deep-foreground",
   };
 }
 
@@ -368,7 +384,6 @@ function FinalRatingBanner({ score }: { score: number }) {
   );
 }
 
-
 function RowCell({
   row,
   colKey,
@@ -381,7 +396,7 @@ function RowCell({
   onChange: (patch: Partial<PerfRow>) => void;
 }) {
   const readOnlyClass =
-    "rounded-md bg-muted/60 px-3 py-2 text-sm text-muted-foreground border border-border/60";
+    "rounded-md bg-perf-calculated px-3 py-2 text-sm text-perf-calculated-foreground border border-perf-calculated-foreground/20";
 
   switch (colKey) {
     case "category":
@@ -403,9 +418,9 @@ function RowCell({
             value={row.allocation}
             disabled={disabled}
             onChange={(e) => onChange({ allocation: Number(e.target.value) })}
-            className="w-24 pr-7"
+            className="w-24 rounded-full bg-perf-blue-soft/40 border-perf-blue-soft-foreground/20 pr-8 focus-visible:bg-background focus-visible:ring-perf-blue-soft-foreground/40"
           />
-          <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-perf-blue-soft-foreground/70">
             %
           </span>
         </div>
@@ -430,7 +445,7 @@ function RowCell({
           value={row.selfScore}
           disabled={disabled}
           onChange={(e) => onChange({ selfScore: Number(e.target.value) })}
-          className="w-20"
+          className="w-20 focus-visible:ring-perf-blue focus-visible:border-perf-blue"
         />
       );
     case "selfRating":
@@ -455,7 +470,7 @@ function RowCell({
           value={row.ssnsScore}
           disabled={disabled}
           onChange={(e) => onChange({ ssnsScore: Number(e.target.value) })}
-          className="w-20"
+          className="w-20 focus-visible:ring-perf-indigo focus-visible:border-perf-indigo"
         />
       );
     case "ssnsRating":
@@ -480,7 +495,7 @@ function RowCell({
           value={row.raScore}
           disabled={disabled}
           onChange={(e) => onChange({ raScore: Number(e.target.value) })}
-          className="w-20"
+          className="w-20 focus-visible:ring-gold focus-visible:border-gold"
         />
       );
     case "finalRating":
