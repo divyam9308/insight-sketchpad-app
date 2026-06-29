@@ -292,8 +292,8 @@ function SummaryCard({
 function getRatingBand(score: number) {
   if (score < 2)
     return {
-      label: "Needs Significant Improvement",
-      sub: "Performance is well below expectations.",
+      label: "Does not meet expectations",
+      range: "Up to 2.0",
       bg: "bg-[#fdecec]",
       border: "border-[#e8a8a8]",
       text: "text-[#8a2f2f]",
@@ -301,8 +301,8 @@ function getRatingBand(score: number) {
     };
   if (score < 3)
     return {
-      label: "Below Expectations",
-      sub: "Some areas need noticeable improvement.",
+      label: "Partially meets expectations; below average, significant improvement required",
+      range: "2.0 - 3.0",
       bg: "bg-[#fdeee4]",
       border: "border-[#ecc4a8]",
       text: "text-[#8a5230]",
@@ -310,25 +310,34 @@ function getRatingBand(score: number) {
     };
   if (score < 3.5)
     return {
-      label: "Partially Meets Expectations",
-      sub: "Mixed performance — room to grow.",
+      label: "Meets defined expectations; improvement required",
+      range: "3.0 - 3.5",
       bg: "bg-[#fdf6e3]",
       border: "border-[#e8d39a]",
       text: "text-[#7a5d1f]",
       dot: "bg-[#c9a346]",
     };
+  if (score < 4)
+    return {
+      label: "Good performance; scope of improvement in few areas",
+      range: "3.5 - 4.0",
+      bg: "bg-[#f1f6e4]",
+      border: "border-[#cfdca0]",
+      text: "text-[#556b1f]",
+      dot: "bg-[#8aa84a]",
+    };
   if (score < 4.5)
     return {
-      label: "Meets Expectations",
-      sub: "Solid, consistent performance.",
+      label: "Strong performance",
+      range: "4.0 - 4.5",
       bg: "bg-[#ecf6ec]",
       border: "border-[#b7d8b7]",
       text: "text-[#2f6b3a]",
       dot: "bg-[#5aa069]",
     };
   return {
-    label: "Exceeds Expectations",
-    sub: "Outstanding — well above expectations.",
+    label: "Exceptional performance",
+    range: "4.5 and above",
     bg: "bg-[#e2f1e4]",
     border: "border-[#8fbf97]",
     text: "text-[#1f5a30]",
@@ -349,7 +358,7 @@ function FinalRatingBanner({ score }: { score: number }) {
       <span className={cn("h-2.5 w-2.5 rounded-full", band.dot)} />
       <div className="flex-1 min-w-0">
         <p className={cn("text-sm font-semibold", band.text)}>{band.label}</p>
-        <p className={cn("text-xs opacity-80", band.text)}>{band.sub}</p>
+        <p className={cn("text-xs opacity-80", band.text)}>Rating range: {band.range}</p>
       </div>
       <div className={cn("text-2xl font-bold tabular-nums", band.text)}>
         {(Math.round(score * 100) / 100).toFixed(2)}
