@@ -156,15 +156,13 @@ function PerformancePage() {
       )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <SummaryCard
-          label="Allocation Total"
-          value={`${fmt(allocationTotal)}%`}
-          tone={allocationValid ? "ok" : "warn"}
-        />
+        <SummaryCard label="Final Rating Total" value={fmt(finalRatingTotal)} tone="gold" />
         <SummaryCard label="Self Rating Total" value={fmt(selfRatingTotal)} />
         <SummaryCard label="SS/NS Rating Total" value={fmt(ssnsRatingTotal)} />
-        <SummaryCard label="Final Rating Total" value={fmt(finalRatingTotal)} tone="gold" />
+        <SummaryCard label="RA Rating Total" value={fmt(finalRatingTotal)} tone="gold" />
       </div>
+
+      <FinalRatingBanner score={finalRatingTotal} />
 
       {!allocationValid && (
         <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
@@ -290,6 +288,77 @@ function SummaryCard({
     </Card>
   );
 }
+
+function getRatingBand(score: number) {
+  if (score < 2)
+    return {
+      label: "Needs Significant Improvement",
+      sub: "Performance is well below expectations.",
+      bg: "bg-[#fdecec]",
+      border: "border-[#e8a8a8]",
+      text: "text-[#8a2f2f]",
+      dot: "bg-[#b04545]",
+    };
+  if (score < 3)
+    return {
+      label: "Below Expectations",
+      sub: "Some areas need noticeable improvement.",
+      bg: "bg-[#fdeee4]",
+      border: "border-[#ecc4a8]",
+      text: "text-[#8a5230]",
+      dot: "bg-[#c97a4a]",
+    };
+  if (score < 3.5)
+    return {
+      label: "Partially Meets Expectations",
+      sub: "Mixed performance — room to grow.",
+      bg: "bg-[#fdf6e3]",
+      border: "border-[#e8d39a]",
+      text: "text-[#7a5d1f]",
+      dot: "bg-[#c9a346]",
+    };
+  if (score < 4.5)
+    return {
+      label: "Meets Expectations",
+      sub: "Solid, consistent performance.",
+      bg: "bg-[#ecf6ec]",
+      border: "border-[#b7d8b7]",
+      text: "text-[#2f6b3a]",
+      dot: "bg-[#5aa069]",
+    };
+  return {
+    label: "Exceeds Expectations",
+    sub: "Outstanding — well above expectations.",
+    bg: "bg-[#e2f1e4]",
+    border: "border-[#8fbf97]",
+    text: "text-[#1f5a30]",
+    dot: "bg-[#3d7f4f]",
+  };
+}
+
+function FinalRatingBanner({ score }: { score: number }) {
+  const band = getRatingBand(score);
+  return (
+    <div
+      className={cn(
+        "flex flex-wrap items-center gap-3 rounded-xl border px-5 py-4 shadow-sm",
+        band.bg,
+        band.border,
+      )}
+    >
+      <span className={cn("h-2.5 w-2.5 rounded-full", band.dot)} />
+      <div className="flex-1 min-w-0">
+        <p className={cn("text-sm font-semibold", band.text)}>{band.label}</p>
+        <p className={cn("text-xs opacity-80", band.text)}>{band.sub}</p>
+      </div>
+      <div className={cn("text-2xl font-bold tabular-nums", band.text)}>
+        {(Math.round(score * 100) / 100).toFixed(2)}
+        <span className="text-sm font-medium opacity-70"> / 5</span>
+      </div>
+    </div>
+  );
+}
+
 
 function RowCell({
   row,
