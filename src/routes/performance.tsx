@@ -156,15 +156,13 @@ function PerformancePage() {
       )}
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <SummaryCard
-          label="Allocation Total"
-          value={`${fmt(allocationTotal)}%`}
-          tone={allocationValid ? "ok" : "warn"}
-        />
+        <SummaryCard label="Final Rating Total" value={fmt(finalRatingTotal)} tone="gold" />
         <SummaryCard label="Self Rating Total" value={fmt(selfRatingTotal)} />
         <SummaryCard label="SS/NS Rating Total" value={fmt(ssnsRatingTotal)} />
-        <SummaryCard label="Final Rating Total" value={fmt(finalRatingTotal)} tone="gold" />
+        <SummaryCard label="RA Rating Total" value={fmt(finalRatingTotal)} tone="gold" />
       </div>
+
+      <FinalRatingBanner score={finalRatingTotal} />
 
       {!allocationValid && (
         <div className="flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive">
