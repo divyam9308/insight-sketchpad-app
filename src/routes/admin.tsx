@@ -180,11 +180,11 @@ function PerformancePerms() {
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">
                     {calc ? (
-                      <Badge variant="secondary" className="bg-muted">
+                      <Badge variant="secondary" className="bg-perf-calculated text-perf-calculated-foreground border-perf-calculated-foreground/20">
                         Calculated · always read-only
                       </Badge>
                     ) : (
-                      PERF_OPTIONS.find((o) => o.value === perms[col.key])?.hint
+                      <PermissionBadge value={perms[col.key]} />
                     )}
                   </td>
                 </tr>
@@ -195,4 +195,27 @@ function PerformancePerms() {
       </div>
     </div>
   );
+}
+
+function PermissionBadge({ value }: { value: PerfPermission }) {
+  switch (value) {
+    case "everyone":
+      return (
+        <Badge variant="secondary" className="bg-perf-blue-soft text-perf-blue-soft-foreground border-perf-blue-soft-foreground/20">
+          Everyone
+        </Badge>
+      );
+    case "super_admin_disabled":
+      return (
+        <Badge variant="secondary" className="bg-perf-amber text-perf-amber-foreground border-perf-amber-foreground/20">
+          Super Admin Disabled
+        </Badge>
+      );
+    case "super_admin_hidden":
+      return (
+        <Badge variant="secondary" className="bg-perf-rose text-perf-rose-foreground border-perf-rose-foreground/20">
+          Super Admin Hidden
+        </Badge>
+      );
+  }
 }

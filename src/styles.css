@@ -31,6 +31,33 @@
   --color-ring: var(--ring);
   --color-gold: var(--gold);
   --color-gold-foreground: var(--gold-foreground);
+
+  /* Performance review palette */
+  --color-perf-blue: var(--perf-blue);
+  --color-perf-blue-foreground: var(--perf-blue-foreground);
+  --color-perf-blue-soft: var(--perf-blue-soft);
+  --color-perf-blue-soft-foreground: var(--perf-blue-soft-foreground);
+  --color-perf-indigo: var(--perf-indigo);
+  --color-perf-indigo-foreground: var(--perf-indigo-foreground);
+  --color-perf-teal: var(--perf-teal);
+  --color-perf-teal-foreground: var(--perf-teal-foreground);
+  --color-perf-amber: var(--perf-amber);
+  --color-perf-amber-foreground: var(--perf-amber-foreground);
+  --color-perf-rose: var(--perf-rose);
+  --color-perf-rose-foreground: var(--perf-rose-foreground);
+  --color-perf-green: var(--perf-green);
+  --color-perf-green-foreground: var(--perf-green-foreground);
+  --color-perf-green-deep: var(--perf-green-deep);
+  --color-perf-green-deep-foreground: var(--perf-green-deep-foreground);
+  --color-perf-orange: var(--perf-orange);
+  --color-perf-orange-foreground: var(--perf-orange-foreground);
+  --color-perf-navy-soft: var(--perf-navy-soft);
+  --color-perf-navy-soft-foreground: var(--perf-navy-soft-foreground);
+  --color-perf-gold-soft: var(--perf-gold-soft);
+  --color-perf-gold-soft-foreground: var(--perf-gold-soft-foreground);
+  --color-perf-calculated: var(--perf-calculated);
+  --color-perf-calculated-foreground: var(--perf-calculated-foreground);
+
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
   --color-sidebar: var(--sidebar);
@@ -58,6 +85,33 @@
   --brand-foreground: oklch(0.99 0 0);
   --gold: oklch(0.78 0.14 85);
   --gold-foreground: oklch(0.25 0.05 80);
+
+  /* Performance review palette */
+  --perf-blue: oklch(0.92 0.05 258);
+  --perf-blue-foreground: oklch(0.25 0.1 258);
+  --perf-blue-soft: oklch(0.94 0.03 258);
+  --perf-blue-soft-foreground: oklch(0.3 0.08 258);
+  --perf-indigo: oklch(0.94 0.04 290);
+  --perf-indigo-foreground: oklch(0.35 0.1 290);
+  --perf-teal: oklch(0.95 0.05 170);
+  --perf-teal-foreground: oklch(0.3 0.1 170);
+  --perf-amber: oklch(0.95 0.06 80);
+  --perf-amber-foreground: oklch(0.3 0.1 80);
+  --perf-rose: oklch(0.94 0.04 25);
+  --perf-rose-foreground: oklch(0.3 0.1 25);
+  --perf-green: oklch(0.94 0.04 145);
+  --perf-green-foreground: oklch(0.3 0.1 145);
+  --perf-green-deep: oklch(0.92 0.06 145);
+  --perf-green-deep-foreground: oklch(0.25 0.1 145);
+  --perf-orange: oklch(0.95 0.06 60);
+  --perf-orange-foreground: oklch(0.3 0.1 60);
+  --perf-navy-soft: oklch(0.92 0.03 258);
+  --perf-navy-soft-foreground: oklch(0.3 0.08 258);
+  --perf-gold-soft: oklch(0.95 0.05 85);
+  --perf-gold-soft-foreground: oklch(0.3 0.08 85);
+  --perf-calculated: oklch(0.94 0.02 258);
+  --perf-calculated-foreground: oklch(0.4 0.05 258);
+
   --secondary: oklch(0.96 0.01 250);
   --secondary-foreground: oklch(0.25 0.05 250);
   --muted: oklch(0.96 0.01 250);
@@ -92,6 +146,33 @@
   --brand-foreground: oklch(0.15 0.03 258);
   --gold: oklch(0.78 0.14 85);
   --gold-foreground: oklch(0.2 0.05 80);
+
+  /* Performance review palette */
+  --perf-blue: oklch(0.3 0.06 258);
+  --perf-blue-foreground: oklch(0.9 0.02 258);
+  --perf-blue-soft: oklch(0.25 0.05 258);
+  --perf-blue-soft-foreground: oklch(0.9 0.02 258);
+  --perf-indigo: oklch(0.25 0.05 290);
+  --perf-indigo-foreground: oklch(0.9 0.02 290);
+  --perf-teal: oklch(0.25 0.05 170);
+  --perf-teal-foreground: oklch(0.9 0.02 170);
+  --perf-amber: oklch(0.28 0.06 80);
+  --perf-amber-foreground: oklch(0.9 0.02 80);
+  --perf-rose: oklch(0.25 0.05 25);
+  --perf-rose-foreground: oklch(0.9 0.02 25);
+  --perf-green: oklch(0.25 0.05 145);
+  --perf-green-foreground: oklch(0.9 0.02 145);
+  --perf-green-deep: oklch(0.3 0.06 145);
+  --perf-green-deep-foreground: oklch(0.9 0.02 145);
+  --perf-orange: oklch(0.28 0.06 60);
+  --perf-orange-foreground: oklch(0.9 0.02 60);
+  --perf-navy-soft: oklch(0.28 0.05 258);
+  --perf-navy-soft-foreground: oklch(0.9 0.02 258);
+  --perf-gold-soft: oklch(0.28 0.05 85);
+  --perf-gold-soft-foreground: oklch(0.9 0.02 85);
+  --perf-calculated: oklch(0.25 0.05 258);
+  --perf-calculated-foreground: oklch(0.75 0.02 258);
+
   --secondary: oklch(0.28 0.04 258);
   --secondary-foreground: oklch(0.98 0 0);
   --muted: oklch(0.28 0.04 258);
