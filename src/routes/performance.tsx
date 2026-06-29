@@ -358,7 +358,7 @@ function FinalRatingBanner({ score }: { score: number }) {
       <span className={cn("h-2.5 w-2.5 rounded-full", band.dot)} />
       <div className="flex-1 min-w-0">
         <p className={cn("text-sm font-semibold", band.text)}>{band.label}</p>
-        <p className={cn("text-xs opacity-80", band.text)}>{band.sub}</p>
+        <p className={cn("text-xs opacity-80", band.text)}>Rating range: {band.range}</p>
       </div>
       <div className={cn("text-2xl font-bold tabular-nums", band.text)}>
         {(Math.round(score * 100) / 100).toFixed(2)}
